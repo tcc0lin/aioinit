@@ -12,6 +12,7 @@ from pprint import pprint as print
 from pathlib import Path
 from dataclasses import dataclass
 from jinja2 import Environment, FileSystemLoader
+from logger import logger
 
 
 @dataclass
@@ -25,6 +26,7 @@ class Initialize:
         return config
 
     def create(self, **kwargs):
+        logger.info("Init project Begin.")
         project_dir = Path(__file__).absolute().parent/kwargs["project_name"]
         templates_path = Path(__file__).absolute().parent/"templates"
         env = Environment(loader=FileSystemLoader(str(templates_path)))
@@ -43,7 +45,7 @@ class Initialize:
                 tpl_path.parent.mkdir(mode=0o777, parents=True)
             with open(tpl_path, 'w+') as file:
                 file.write(output)
-
+        logger.info("Init project End.")
     def get_all_tpl(self, path, parent=None):
         if not path.is_dir():
             return [f"{parent}/{path.name}" if parent else path.name]
