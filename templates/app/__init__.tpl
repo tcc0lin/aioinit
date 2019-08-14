@@ -3,10 +3,15 @@
 from typing import NoReturn
 from aiohttp import web
 from aiohttp.web import Application
+from config import *
+from logger import logger
+from clients import get_client
 
 
 def _init_attrs(app: Application) -> NoReturn:
     app["{{project_name}}"] = "{{project_name}}"
+    app["redis"] = get_client(client_type="redis")
+    app["mysql"] = get_client(client_type="mysql")
 
 
 def _init_startup_task(app: Application) -> NoReturn:
@@ -32,3 +37,13 @@ def init_app() -> Application:
     _init_attrs(app=app)
     _init_startup_task(app=app)
     return app
+
+
+async def run_app() -> NoReturn:
+    logger.info("App init Begin.")
+    app = init_app()
+    runner = web.AppRunner(app)
+    await runner.setup()
+    site = web.TCPSite(runner, APP_HOST, APP_PORT)
+    logger.info(f"App init Success, Server listen at {APP_HOST}:{APP_PORT}")
+    await site.start()

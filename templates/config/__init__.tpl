@@ -12,7 +12,7 @@ import sys
 import importlib
 from .base import *
 ALLOWED_DEPLOY_TYPE = ['PROD', 'DEV', 'TEST']
-DEPLOY_TYPE = os.environ.get('{{project_name|upper()}}', 'TEST')
+DEPLOY_TYPE = os.environ.get('{{project_name|upper()}}', 'DEV')
 if DEPLOY_TYPE not in ALLOWED_DEPLOY_TYPE:
     raise Exception('Deployment type {} is not allowed'.format(DEPLOY_TYPE))
 sub_config_name = DEPLOY_TYPE.lower()
