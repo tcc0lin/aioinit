@@ -29,6 +29,8 @@ def _init_route(app: Application) -> NoReturn:
             web.delete('/index', index),
         ]
     )
+    for resource in app.router.resources():
+        logger.info(f"Register Route:{resource.url_for()}")
 
 
 def init_app() -> Application:
