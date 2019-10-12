@@ -12,7 +12,6 @@ from typing import NoReturn
 from pathlib import Path
 from .core.initialize import Initialize
 from .logger import logger
-
 parser = argparse.ArgumentParser(
     description='Auto Create Robust Web Projects Of Python3 For Humans'
 )
@@ -36,4 +35,8 @@ def main() -> NoReturn:
     init.create(
         project_name=args.name,
         project_path=args.path,
+        project_envs=list(map(str.upper, ["dev", "prod", "test"]))
     )
+
+
+main()
