@@ -1,2 +1,2 @@
-# aiohttp-init  
+# aioinit  
 ### Aiohttp officially recommends automatic generation libraries
